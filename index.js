@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 let boats = []; // IN MEM DATABASE, TODO: REPLACE WITH ACTUAL DB
 
@@ -141,4 +141,4 @@ app.post('/boat/:name', (req, res) => {
 	}
 });
 
-app.listen(port, () => console.log(`Fishfry Tours API is now listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Fishfry Tours API is now listening on port ${port}!`))
