@@ -141,4 +141,4 @@ app.post('/boat/:name', (req, res) => {
 	}
 });
 
-app.listen(PORT, () => console.log(`Fishfry Tours API is now listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Fishfry Tours API is now listening on port ${PORT}!`))
