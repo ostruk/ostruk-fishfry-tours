@@ -4,7 +4,7 @@
   "description": "ISL 27 assignment for Citizens Services full stack developer position",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index.js"
   },
   "author": "Oleksiy Struk",
