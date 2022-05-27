@@ -141,4 +141,8 @@ app.post('/boat/:name', (req, res) => {
 	}
 });
 
+app.get('/', (req, res) => {
+	res.send('hello');
+});
+	
 app.listen(PORT, () => console.log(`Fishfry Tours API is now listening on port ${PORT}!`))
