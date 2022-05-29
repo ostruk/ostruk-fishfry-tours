@@ -220,6 +220,7 @@ app.post('/boat/:name', (req, res) => {
 	}
 });
 
+// build plz
 // app.get('/', (req, res) => {
 // 	res.send('hello');
 // });
