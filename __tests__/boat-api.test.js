@@ -78,7 +78,7 @@ describe('User Endpoints', () => {
   });
 
   it('GET /boats should show all boats', async () => {
-    const res = await requestWithSupertest.get('/boats');
+    const res = await requestWithSupertest.get('/api/boats');
     expect(res.status).toEqual(200);
     expect(res.type).toEqual(expect.stringContaining('json'));
     expect(res.body).toHaveLength(12);
@@ -86,31 +86,31 @@ describe('User Endpoints', () => {
   });
 
   it('POST /boat should create new boat', async () => {
-    const res = await requestWithSupertest.post('/boat').send({"name":"Newboat","status":"Docked"});
+    const res = await requestWithSupertest.post('/api/boat').send({"name":"Newboat","status":"Docked"});
     expect(res.status).toEqual(200);
-    const res2 = await requestWithSupertest.get('/boats');
+    const res2 = await requestWithSupertest.get('/api/boats');
     expect(res2.body).toHaveLength(13);
     // expect(res.body).toHaveProperty('users')
   });
 
   it('POST /boat should not add boat with existing name', async () => {
-    const res = await requestWithSupertest.post('/boat').send({"name":"Gale","status":"Docked"});
+    const res = await requestWithSupertest.post('/api/boat').send({"name":"Gale","status":"Docked"});
     expect(res.status).toEqual(500);
-    const res2 = await requestWithSupertest.get('/boats');
+    const res2 = await requestWithSupertest.get('/api/boats');
     expect(res2.body).toHaveLength(12);
     // expect(res.body).toHaveProperty('users')
   });
 
   it('POST /boat should not add boat with invalid status', async () => {
-    const res = await requestWithSupertest.post('/boat').send({"name":"Newboat","status":"BadStatus"});
+    const res = await requestWithSupertest.post('/api/boat').send({"name":"Newboat","status":"BadStatus"});
     expect(res.status).toEqual(500);
-    const res2 = await requestWithSupertest.get('/boats');
+    const res2 = await requestWithSupertest.get('/api/boats');
     expect(res2.body).toHaveLength(12);
     // expect(res.body).toHaveProperty('users')
   });
 
   it('GET /boat should get boat by name', async () => {
-    const res = await requestWithSupertest.get('/boat/Gale');
+    const res = await requestWithSupertest.get('/api/boat/Gale');
     expect(res.status).toEqual(200);
     expect(res.body).toStrictEqual({
         "name": "Gale",
@@ -119,26 +119,26 @@ describe('User Endpoints', () => {
   });
 
   it('GET /boat should 404 with non existant boat', async () => {
-    const res = await requestWithSupertest.get('/boat/DNE');
+    const res = await requestWithSupertest.get('/api/boat/DNE');
     expect(res.status).toEqual(404);
   });
 
   it('DEL /boat should delete boat', async () => {
-    const res = await requestWithSupertest.delete('/boat/Gale');
+    const res = await requestWithSupertest.delete('/api/boat/Gale');
     expect(res.status).toEqual(200);
-    const res2 = await requestWithSupertest.get('/boats');
+    const res2 = await requestWithSupertest.get('/api/boats');
     expect(res2.body).toHaveLength(11);
   });
 
   it('DEL /boat should 404 for non-existant boat', async () => {
-    const res = await requestWithSupertest.delete('/boat/DNE');
+    const res = await requestWithSupertest.delete('/api/boat/DNE');
     expect(res.status).toEqual(404);
   });
 
   it('PATCH /boat should update status', async () => {
-    const res = await requestWithSupertest.patch('/boat/Gale').send({'status':'Docked'});
+    const res = await requestWithSupertest.patch('/api/boat/Gale').send({'status':'Docked'});
     expect(res.status).toEqual(200);
-    const res2 = await requestWithSupertest.get('/boat/Gale');
+    const res2 = await requestWithSupertest.get('/api/boat/Gale');
     expect(res2.status).toEqual(200);
     expect(res2.body).toStrictEqual({
         "name": "Gale",
@@ -147,9 +147,9 @@ describe('User Endpoints', () => {
   });
 
   it('PATCH /boat should update name', async () => {
-    const res = await requestWithSupertest.patch('/boat/Gale').send({'newName':'Newboat'});
+    const res = await requestWithSupertest.patch('/api/boat/Gale').send({'newName':'Newboat'});
     expect(res.status).toEqual(200);
-    const res2 = await requestWithSupertest.get('/boat/Newboat');
+    const res2 = await requestWithSupertest.get('/api/boat/Newboat');
     expect(res2.status).toEqual(200);
     expect(res2.body).toStrictEqual({
         "name": "Newboat",
@@ -158,24 +158,24 @@ describe('User Endpoints', () => {
   });
 
   it('PATCH /boat should 404 on non existant boat', async () => {
-    const res = await requestWithSupertest.patch('/boat/DNE').send({'newName':'Newboat'});
+    const res = await requestWithSupertest.patch('/api/boat/DNE').send({'newName':'Newboat'});
     expect(res.status).toEqual(404);
   });
 
   it('PATCH /boat should not update existing name', async () => {
-    const res = await requestWithSupertest.patch('/boat/Gale').send({'newName':'Wanderlust'});
+    const res = await requestWithSupertest.patch('/api/boat/Gale').send({'newName':'Wanderlust'});
     expect(res.status).toEqual(500);
   });
 
   it('PATCH /boat should not set invalid status', async () => {
-    const res = await requestWithSupertest.patch('/boat/Gale').send({'status':'Invalid'});
+    const res = await requestWithSupertest.patch('/api/boat/Gale').send({'status':'Invalid'});
     expect(res.status).toEqual(500);
   });
 
   it('POST /boat should update boat', async () => {
-    const res = await requestWithSupertest.post('/boat/Gale').send({'name':'Newboat','status':'Docked'});
+    const res = await requestWithSupertest.post('/api/boat/Gale').send({'name':'Newboat','status':'Docked'});
     expect(res.status).toEqual(200);
-    const res2 = await requestWithSupertest.get('/boat/Newboat');
+    const res2 = await requestWithSupertest.get('/api/boat/Newboat');
     expect(res2.status).toEqual(200);
     expect(res2.body).toStrictEqual({
         "name": "Newboat",
@@ -184,18 +184,18 @@ describe('User Endpoints', () => {
   });
 
   it('POST /boat should 404 on non-existant boat', async () => {
-    const res = await requestWithSupertest.post('/boat/DNE').send({'name':'Newboat','status':'Docked'});
+    const res = await requestWithSupertest.post('/api/boat/DNE').send({'name':'Newboat','status':'Docked'});
     console.log(res.body);
     expect(res.status).toEqual(404);
   });
 
   it('POST /boat should not update invalid status', async () => {
-    const res = await requestWithSupertest.post('/boat/Gale').send({'name':'Newboat','status':'Invalid'});
+    const res = await requestWithSupertest.post('/api/boat/Gale').send({'name':'Newboat','status':'Invalid'});
     expect(res.status).toEqual(500);
   });
 
   it('POST /boat should not update if that name already exists', async () => {
-    const res = await requestWithSupertest.post('/boat/Gale').send({'name':'Wanderlust','status':'Docked'});
+    const res = await requestWithSupertest.post('/api/boat/Gale').send({'name':'Wanderlust','status':'Docked'});
     expect(res.status).toEqual(500);
   });
 

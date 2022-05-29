@@ -104,7 +104,7 @@ app.get('/api/boats', (req, res) => {
 });
 
 // GET boat by name
-app.get('/boat/:name', (req, res) => {
+app.get('/api/boat/:name', (req, res) => {
     // Reading id from the URL
     const name = req.params.name;
 
@@ -121,7 +121,7 @@ app.get('/boat/:name', (req, res) => {
 });
 
 // DELETE boat
-app.delete('/boat/:name', (req, res) => {
+app.delete('/api/boat/:name', (req, res) => {
     // Reading name from the URL
     const name = req.params.name;
 
@@ -143,7 +143,7 @@ app.delete('/boat/:name', (req, res) => {
 });
 
 // PATCH (change) boat status or name
-app.patch('/boat/:name', (req,res) =>{
+app.patch('/api/boat/:name', (req,res) =>{
 	// Reading name from the URL
     const name = req.params.name;
 	const newStatus = req.body.status;
@@ -187,7 +187,7 @@ app.patch('/boat/:name', (req,res) =>{
 
 
 // EDIT boat
-app.post('/boat/:name', (req, res) => {
+app.post('/api/boat/:name', (req, res) => {
     // Reading name from the URL
     const name = req.params.name;
     const newBoat = req.body;
@@ -219,11 +219,6 @@ app.post('/boat/:name', (req, res) => {
 		res.status(404).send('Boat not found');
 	}
 });
-
-// build plz
-// app.get('/', (req, res) => {
-// 	res.send('hello');
-// });
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'front/build')));
