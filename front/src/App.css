@@ -1,0 +1,58 @@
+[data-rbd-drag-handle-context-id="0"], [data-rbd-drag-handle-context-id="0"]>div{
+  width:100%;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-1"]{
+  background:#00a70d;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-1"] .MuiCardContent-root{
+  background:#b4ffba;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-2"]{
+  background:#1976d2;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-2"] .MuiCardContent-root{
+  background:#b4fcff;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-3"]{
+  background:#bd7a00;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-3"] .MuiCardContent-root{
+  background:#fff6b4;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-4"]{
+  background:#7c7c7c;
+}
+
+.react-kanban-column[data-rbd-draggable-id="column-draggable-4"] .MuiCardContent-root{
+  background:#f5f5f5;
+}
+
+.column-title{
+  margin-bottom:12px;
+}
+
+#add-button{
+  position: fixed;
+  top: 73px;
+  left: 10px;
+}
+
+#root{
+  position:relative;
+}
+
+.react-kanban-board{
+  padding-left: 25px !important;
+  padding-top: 25px  !important;
+}
+
+body{
+  background:#00427c;
+}

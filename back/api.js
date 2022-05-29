@@ -1,5 +1,3 @@
-// TODO: break into multiple files
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,11 +9,72 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
+let boats = [
+    {
+        "name":"Serendipity",
+        "status":"Docked"
+    },
+    {
+        "name":"Imagination",
+        "status":"Outbound to Sea"
+    },
+    {
+        "name":"Liberty",
+        "status":"Maintenance"
+    },
+    {
+        "name":"Wanderlust",
+        "status":"Docked"
+    },
+    {
+        "name":"Gale",
+        "status":"Outbound to Sea"
+    },
+    {
+        "name":"Zephyr",
+        "status":"Inbound to Harbor"
+    },
+    {
+        "name":"Sapphire",
+        "status":"Docked"
+    },
+    {
+        "name":"Amazonite",
+        "status":"Outbound to Sea"
+    },
+    {
+        "name":"Atlantis",
+        "status":"Maintenance"
+    },
+    {
+        "name":"Leviathan",
+        "status":"Maintenance"
+    },
+    {
+        "name":"Wayfarer",
+        "status":"Outbound to Sea"
+    },
+    {
+        "name":"Neptune",
+        "status":"Inbound to Harbor"
+    },
+]; // IN MEM DATABASE, TODO: REPLACE WITH ACTUAL DB
 
-let boats = []; // IN MEM DATABASE, TODO: REPLACE WITH ACTUAL DB
+function setBoats(boatsIn){
+    boats = boatsIn;
+}
 
 const utils = require("./utils");
+
+function boatExists(name){
+    let found = false;
+	for (let b of boats) {
+        if (b.name === name) {
+            found = true;
+        }
+    }
+    return found;
+}
 
 // CREATE new boat
 app.post('/boat', (req, res) => {
@@ -28,14 +87,8 @@ app.post('/boat', (req, res) => {
 	}
 	
 	// check if boat with this name already exists
-	let found = false;
-	for (let b of boats) {
-        if (b.name === boat.name) {
-            found = true;
-        }
-    }
 	
-	if (found){
+	if (boatExists(boat.name)){
 		res.status(500).send('Boat with this name already exists');
 		return;
 	}
@@ -88,33 +141,47 @@ app.delete('/boat/:name', (req, res) => {
 	}
 });
 
-// PATCH (change) boat status
+// PATCH (change) boat status or name
 app.patch('/boat/:name', (req,res) =>{
 	// Reading name from the URL
     const name = req.params.name;
 	const newStatus = req.body.status;
+    const newName = req.body.newName;
 	
-	if (['Docked','Outbound to Sea','Inbound to Harbor','Maintenance'].indexOf(newStatus)==-1){
-		res.status(500).send('Invalid boat status');
-		return;
-	}
-	
-	// Find and update boat in the array
+    // Find and update boat in the array
 	let found = false;
+    let foundBoat = null;
     for (let i = 0; i < boats.length; i++) {
         let boat = boats[i]
         if (boat.name === name) {
-            boats[i].status = newStatus;
+            foundBoat = boat;
 			found = true;
         }
     }
-	
-	if (found){
-		res.send('Boat status updated');
-	}else{
+
+    if (!found){
 		res.status(404).send('Boat not found');
+        return;
 	}
-	
+
+    if (newStatus){
+        if (['Docked','Outbound to Sea','Inbound to Harbor','Maintenance'].indexOf(newStatus)==-1){
+            res.status(500).send('Invalid boat status');
+            return;
+        }
+        foundBoat.status = newStatus;
+    }
+
+    if (newName){
+        // check if boat with this name already exists
+        if (boatExists(newName)){
+            res.status(500).send('Boat with this name already exists');
+            return;
+        }
+        foundBoat.name = newName;
+    }
+
+	res.send('Boat status updated');
 });
 
 
@@ -126,15 +193,26 @@ app.post('/boat/:name', (req, res) => {
 
     // Find and update boat in the array
 	let found = false;
+    let foundI = -1;
     for (let i = 0; i < boats.length; i++) {
         let boat = boats[i]
         if (boat.name === name) {
-            boats[i] = newBoat;
+            foundI = i;
 			found = true;
         }
     }
 
 	if (found){
+        const isBoatValid = utils.boatValid(newBoat);
+        if (!isBoatValid){
+            res.status(500).send('Invalid boat data');
+            return;
+        }
+        if (boatExists(newBoat.name)){
+            res.status(500).send('Boat with this name already exists');
+            return;
+        }
+        boats[foundI] = newBoat;
 		res.send('Boat updated');
 	}else{
 		res.status(404).send('Boat not found');
@@ -145,4 +223,4 @@ app.get('/', (req, res) => {
 	res.send('hello');
 });
 	
-app.listen(PORT, () => console.log(`Fishfry Tours API is now listening on port ${PORT}!`))
+module.exports = {api:app,setBoats:setBoats};
