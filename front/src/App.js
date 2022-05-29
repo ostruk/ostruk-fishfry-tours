@@ -79,7 +79,7 @@ function ControlledBoard() {
 
   // Retreive board state from the server
   React.useEffect(() => {
-    axios.get('http://localhost:3000/boats').then((response) => {
+    axios.get('/api/boats').then((response) => {
       // parse response into format compatible with the board component
       let data = response.data;
       data.forEach(function(boat) { 
@@ -110,7 +110,7 @@ function ControlledBoard() {
     setBoard(updatedBoard);
 
     // console.log('moveToId: ', moveToId);
-    axios.patch('http://localhost:3000/boat/'+_card.id, {status:moveToId}).then((response) => {
+    axios.patch('/api/boat/'+_card.id, {status:moveToId}).then((response) => {
       
     })
   }
@@ -120,7 +120,7 @@ function ControlledBoard() {
     let status = card.status;
     let columnIndex = getColumnIndexFromName(status);
     let column = board.columns[columnIndex];
-    axios.delete('http://localhost:3000/boat/'+card.id).then((response) => {
+    axios.delete('/api/boat/'+card.id).then((response) => {
       const updatedBoard=removeCard(controlledBoard,column,card);
       setBoard(updatedBoard);
     });
@@ -144,7 +144,7 @@ function ControlledBoard() {
 
   const handleAddSubmitClick = ()=>{
     handleClose();
-    axios.post('http://localhost:3000/boat',{name:newBoatName,status:'Docked'}).then((response)=>{
+    axios.post('/api/boat',{name:newBoatName,status:'Docked'}).then((response)=>{
       addCardCallback(newBoatName);
     })
     setNewBoatName("");
@@ -191,7 +191,7 @@ function ControlledBoard() {
 
   const handleEditSubmitClick = ()=>{
     handleModalClose();
-    axios.patch('http://localhost:3000/boat/'+editingCard.cardId, {newName:editingCard.name}).then((response) => {
+    axios.patch('/api/boat/'+editingCard.cardId, {newName:editingCard.name}).then((response) => {
         handleEditCard();
     })
   }

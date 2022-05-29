@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 app.use(cors());
@@ -77,7 +78,7 @@ function boatExists(name){
 }
 
 // CREATE new boat
-app.post('/boat', (req, res) => {
+app.post('/api/boat', (req, res) => {
 	const boat = req.body;
 	
 	const isBoatValid = utils.boatValid(boat);
@@ -98,7 +99,7 @@ app.post('/boat', (req, res) => {
 });
 
 // GET all boats
-app.get('/boats', (req, res) => {
+app.get('/api/boats', (req, res) => {
     res.json(boats);
 });
 
@@ -222,5 +223,14 @@ app.post('/boat/:name', (req, res) => {
 app.get('/', (req, res) => {
 	res.send('hello');
 });
+
+// // Serve static files from the React app
+// app.use(express.static(path.join(__dirname, 'front/build')));
+
+// // The "catchall" handler: for any request that doesn't
+// // match one above, send back React's index.html file.
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname+'/front/build/index.html'));
+// });
 	
 module.exports = {api:app,setBoats:setBoats};
