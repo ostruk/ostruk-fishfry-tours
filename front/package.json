@@ -49,5 +49,11 @@
     "jest": "^28.1.0",
     "jest-environment-jsdom": "^28.1.0",
     "react-test-renderer": "^18.1.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^.+\\.(css|less)$": "<rootDir>/src/config/CSSStub.js"
+    },
+    "testEnvironment": "jsdom"
   }
 }

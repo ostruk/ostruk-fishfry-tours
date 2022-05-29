@@ -27,9 +27,6 @@
     "supertest": "^6.2.3"
   },
   "jest": {
-    "moduleNameMapper": {
-      "^.+\\.(css|less)$": "<rootDir>/front/src/config/CSSStub.js"
-    },
-    "testEnvironment": "jsdom"
+    "modulePathIgnorePatterns": ["<rootDir>/front/"]
   }
 }
