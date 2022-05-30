@@ -1,0 +1,37 @@
+jobs:
+  include:
+    - stage: test
+      language: node_js
+      node_js:
+        - lts/*
+      before_script:
+        - npm install
+      script:
+        - npm test
+    - # front end tests
+      language: node_js
+      node_js:
+        - lts/*
+      before_script:
+        - cd front
+        - npm install
+      script:
+        - npm test
+    - stage: deploy
+      language: node_js
+      node_js:
+        - lts/*
+      script:
+        - echo "skipping tests"
+      before_deploy:
+        - rvm $(travis_internal_ruby) --fuzzy do ruby -S gem install faraday -v 1.8.0
+      deploy:
+        provider: heroku
+        skip_cleanup: true
+        keep-history: true
+        api_key: 
+          secure: 2RlM8khY2w6dyPC5XLZ/JDOUqTQvAJ+HHjM5/Jk+P77mGQVvolItrebMy68JkMPib7RXCLT99sUkWmvAsuQnT4ZrRLowfBrBku8nhrL8GSMQ09t9V6LS2dm2l7P2vK/SFqnGa1NV2dWMdInwz8kQ26Rw7C143W/PKCEvQwkKnP+P0F7i+8zUAJ2M050sBtvfoNGDfGD10bbEdmq5bL7UB2eU8ikB+2pJHhsFVAWW0y3RXTfvVUVtUXjtEMLIn7BDQ1TLhVc7MuseIh7EmTh+i7PXspXNOBBkwrNl5AjvYc+4VnuKfUw/8fI9tmnbH479A4MAg1+edVmu5AfREOV4vROCL3gIH2MjE+o1F3GU0KzJNeJHQnuoHmlnA10L0DUWYZng6eLbxnpv4SLu+xNgdGIIU3Puhb0xuf4Pkh41Fb9QHFtIDrGmZv2vEGxA5bgZtCO9duOcq5gtiA3kSY3lXGxauadpwANqNxmzwk6WQG6iRX6oWmHs9HIcB/L8YOZjxdGuqxnhfnx+zUGwBsfiVYbskIXlE5G1R9Gi+weSlvI9gGF2XfuvfOGx2V+TYj6x6/8jWbOiC61imdZCldwv3eosBdDpd62+XMhpjqA5+OETqtVZiiSKxqTpF5niviZW0gg4+2K6GvrZoknzuKKM9E6V/K/z+Fx7WVtCy5pZfUo=
+        app: ostruk-fishfry-tours
+        strategy: git
+        on:
+          repo: ostruk/ostruk-fishfry-tours
