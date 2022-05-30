@@ -8,11 +8,6 @@ import * as axios from "axios";
 // Mock out all top level functions, such as get, put, delete and post:
 jest.mock("axios");
 
-afterEach(() => {
-    cleanup();
-  });
-
-
 // mock data to populate initial board
 let data = [{"name":"Serendipity","status":"Docked"},{"name":"Imagination","status":"Outbound to Sea"},{"name":"Liberty","status":"Maintenance"},
             {"name":"Wanderlust","status":"Docked"},{"name":"Gale","status":"Outbound to Sea"},
@@ -86,13 +81,13 @@ test('should render the add button', async () => {
     expect(col1).toBeInTheDocument();
 })
 
-test('should not render modal initially', async () => {
+test('should not render new boat modal initially', async () => {
     render(<App />);
     const col11 = await waitFor(() => screen.queryByText("Add new boat"));
     expect(col11).not.toBeInTheDocument();
 })
 
-test('should be able to type new boat name into the dialog', async () => {
+test('should be able to type new boat name into the new boat dialog', async () => {
     const {container}=render(<App />);
     const addBtn = await waitFor(() => screen.getByLabelText("add"));
     fireEvent.click(addBtn);

@@ -1,3 +1,7 @@
+body {
+  margin: 0;  
+}
+
 [data-rbd-drag-handle-context-id="0"], [data-rbd-drag-handle-context-id="0"]>div{
   width:100%;
 }
