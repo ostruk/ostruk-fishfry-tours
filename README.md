@@ -23,6 +23,8 @@ The app uses [asseinfo/react-kanban](https://github.com/asseinfo/react-kanban) l
 
 The responsive styling is provided by [React Material UI](https://mui.com/) package. All graphics are provided by [Google's Material Symbols](https://fonts.google.com/icons) icons.
 
+[App.css](front/src/App.css) contains custom CSS to give the board unique coloring style.
+
 Connectivity to API is provided using [Axios](https://axios-http.com/) HTTP client.
 
 Features:
