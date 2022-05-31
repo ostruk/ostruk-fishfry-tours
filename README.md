@@ -36,7 +36,9 @@ Features:
 The app has been tested on mobile device and works as expected.
 
 NOTE: The UI doesn't currently handle errors issued by the API.
+
 NOTE: There should be a length limit on the items to prevent UI glitches.
+
 NOTE: UI and API don't handle empty boat name as invalid.
 
 ### Testing
