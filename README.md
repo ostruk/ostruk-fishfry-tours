@@ -41,6 +41,8 @@ NOTE: There should be a length limit on the items to prevent UI glitches.
 
 NOTE: UI and API don't handle empty boat name as invalid.
 
+NOTE: It would be desirable to occasionally re-retreive data from API to avoid having to refresh page every time to see up to date information.
+
 ### Testing
 Tests are perfomed using the Junit library and are written for both the backend and the frontend portions of the project.
 
@@ -57,6 +59,8 @@ In production an actual database would be used and would have to be mocked with 
 Frontend tests are contained in the [app-test.js](front/src/__tests__) file. They are DOM tests written with the help of [React's Testing Library](https://testing-library.com/). Axios requests to the API are mocked using Jest's mock function. Tests verify that the board gets rendered with all the items as well as use case functionality by simulating user interactions such as clicking buttons and entering text into input fields.
 
 Other functional tests could be written using [snapshot approach](https://jestjs.io/docs/snapshot-testing) provided by Jest as well as individual component testing and unit tests.
+
+NOTE: the tests are not exhaustive - they don't test the editing and removal use cases.
 
 ### DevOps Pipeline
 [.travis.yml](.travis.yml) file contains build instructions for Travis CI. There are 2 phases - the testing phase and the deployment phase. During testing phase the backend and the frontend tests are ran. If the testing phase is successful, the deployment phase runs, during which the app gets deployed to Heroku.
