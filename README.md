@@ -35,6 +35,10 @@ Features:
 
 The app has been tested on mobile device and works as expected.
 
+NOTE: The UI doesn't currently handle errors issued by the API.
+NOTE: There should be a length limit on the items to prevent UI glitches.
+NOTE: UI and API don't handle empty boat name as invalid.
+
 ### Testing
 Tests are perfomed using the Junit library and are written for both the backend and the frontend portions of the project.
 
