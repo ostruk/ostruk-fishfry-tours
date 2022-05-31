@@ -78,14 +78,23 @@ function MyBoard(props){
     // hook for card move event issued by kanban library
     // - send api request to change boat status and update board
     function handleCardMove(_card, source, destination) {
-    // update board state - call moveCard utility function from the kanban library
-    const updatedBoard = moveCard(controlledBoard, source, destination);
-    setBoard(updatedBoard);
+        // update board state - call moveCard utility function from the kanban library
+        const updatedBoard = moveCard(controlledBoard, source, destination);
+        // update internal properties of that specific card
+        // find column to which this item belongs
+        let columnIndex = destination.toColumnId-1;
+        let column = updatedBoard.columns[columnIndex];
 
-    // get the column name tow hich we are moving the boat
-    let moveToId = controlledBoard.columns.find(x => x.id === destination.toColumnId).title;
-    // send api request to move the boat
-    axios.patch('/api/boat/'+_card.id, {status:moveToId}).then((response) => {})
+        // find card in the column
+        let card = column.cards.find(x => x.id === _card.id);
+        card.status = updatedBoard.columns[columnIndex].title;
+
+        setBoard(updatedBoard);
+
+        // get the column name tow hich we are moving the boat
+        let moveToId = controlledBoard.columns.find(x => x.id === destination.toColumnId).title;
+        // send api request to move the boat
+        axios.patch('/api/boat/'+_card.id, {status:moveToId}).then((response) => {})
     }
 
     // handle "delete" button click from the menu for individual boat
