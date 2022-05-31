@@ -43,9 +43,10 @@ body {
 }
 
 #add-button{
-  position: fixed;
-  top: 73px;
-  left: 10px;
+  float:left;
+  margin-bottom: -56px;
+  margin-left: -34px;
+  margin-top: -23px;
 }
 
 #root{
@@ -59,4 +60,8 @@ body {
 
 body{
   background:#00427c;
+}
+
+.MuiCardContent-root{
+  padding-bottom: 16px !important;
 }

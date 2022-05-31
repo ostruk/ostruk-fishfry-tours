@@ -2,16 +2,6 @@ import React, { useState } from "react";
 import ReactDOM from 'react-dom/client'
 import axios from "axios";
 
-import Fab from '@mui/material/Fab';
-import Icon from '@mui/material/Icon';
-
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import Board, { moveCard, removeCard, addCard } from '@asseinfo/react-kanban'
 import '@asseinfo/react-kanban/dist/styles.css'
@@ -187,15 +177,13 @@ function MyBoard(props){
             <Card title={title} status={status} handleCardRemove={handleCardRemove} handleCardEdit={handleCardEdit}></Card>
             )}
             renderColumnHeader={({ title }) => (
-            <ColumnTitle title={title}></ColumnTitle>
+            <ColumnTitle title={title} handleAddClick={handleAddClick}></ColumnTitle>
             )}
         >
             {controlledBoard}
         </Board>
       
-      <Fab color="warning" aria-label="add" id="add-button" onClick={handleAddClick}>
-        <Icon>add</Icon>
-      </Fab>
+      
 
       <NewBoatDialog open={newBoatDialogOpen} onClose={handleNewBoatDialogClose} addCardCallback={addCardCallback}></NewBoatDialog>
       <EditBoatDialog open={editBoatDialogOpen} onClose={handleEditModalClose} addCardCallback={addCardCallback}
